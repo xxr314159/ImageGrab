@@ -1,0 +1,90 @@
+/* 图提取 ImageGrab - 悬浮按钮样式 */
+
+#imagegrab-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2147483646;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 112px;
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35),
+    0 2px 6px rgba(15, 23, 42, 0.12);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#imagegrab-fab:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.42),
+    0 4px 10px rgba(15, 23, 42, 0.16);
+  filter: brightness(1.05);
+}
+
+#imagegrab-fab:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+#imagegrab-fab.is-loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+#imagegrab-fab.is-loading::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: imagegrab-spin 0.7s linear infinite;
+}
+
+@keyframes imagegrab-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#imagegrab-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 80px;
+  z-index: 2147483647;
+  max-width: 280px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #f8fafc;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  line-height: 1.45;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#imagegrab-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

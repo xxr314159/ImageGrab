@@ -1,0 +1,315 @@
+/* 图提取 ImageGrab - 画廊页样式 */
+
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --radius: 14px;
+  --font: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(1200px 500px at 10% -10%, #dbeafe 0%, transparent 55%),
+    radial-gradient(900px 400px at 100% 0%, #e0e7ff 0%, transparent 50%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+body {
+  padding-bottom: 48px;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.brand {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--primary);
+}
+
+.meta {
+  margin: 4px 0 0;
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.check-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.selected-count {
+  min-width: 96px;
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  background: #f8fafc;
+}
+
+main {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+}
+
+.card.is-selected {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25), var(--shadow);
+}
+
+.thumb-wrap {
+  position: relative;
+  aspect-ratio: 1;
+  background: #f1f5f9
+    repeating-conic-gradient(#e2e8f0 0% 25%, #f8fafc 0% 50%) 50% / 16px 16px;
+  cursor: pointer;
+}
+
+.thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+}
+
+.card-check {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--primary);
+  z-index: 2;
+}
+
+.card-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.card-size {
+  font-variant-numeric: tabular-nums;
+}
+
+.card-index {
+  color: #94a3b8;
+}
+
+.empty {
+  padding: 80px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+.progress-card {
+  width: min(420px, calc(100% - 32px));
+  padding: 24px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+  text-align: center;
+}
+
+.progress-card h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.progress-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.progress-bar {
+  margin: 18px 0 10px;
+  height: 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  transition: width 0.2s ease;
+}
+
+.progress-detail {
+  font-size: 12px !important;
+  min-height: 1.2em;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 110;
+  transform: translateX(-50%);
+  max-width: min(480px, calc(100% - 32px));
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #f8fafc;
+  font-size: 14px;
+  line-height: 1.45;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.3);
+}
+
+@media (max-width: 720px) {
+  .toolbar {
+    padding: 12px 16px;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+  }
+
+  main {
+    padding: 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 12px;
+  }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图提取 ImageGrab - 图片画廊</title>
+    <link rel="stylesheet" href="gallery.css" />
+  </head>
+  <body>
+    <header class="toolbar">
+      <div class="toolbar-left">
+        <h1 class="brand">ImageGrab</h1>
+        <p class="meta" id="pageMeta">正在加载…</p>
+      </div>
+      <div class="toolbar-actions">
+        <label class="check-all">
+          <input type="checkbox" id="selectAll" />
+          <span>全选</span>
+        </label>
+        <button type="button" class="btn btn-ghost" id="btnInvert">反选</button>
+        <span class="selected-count" id="selectedCount">已选 0 / 0</span>
+        <button type="button" class="btn btn-primary" id="btnDownload" disabled>
+          下载选中
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <div id="emptyState" class="empty hidden">
+        <p>暂无图片，请回到商品详情页点击「获取图片」。</p>
+      </div>
+      <div id="grid" class="grid" aria-live="polite"></div>
+    </main>
+
+    <div id="progressOverlay" class="overlay hidden" role="status">
+      <div class="progress-card">
+        <h2>正在下载</h2>
+        <p id="progressText">准备中…</p>
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <p id="progressDetail" class="progress-detail"></p>
+      </div>
+    </div>
+
+    <div id="resultToast" class="toast hidden" role="status"></div>
+
+    <script src="gallery.js"></script>
+  </body>
+</html>
